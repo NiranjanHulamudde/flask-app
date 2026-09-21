@@ -19,14 +19,28 @@ pipeline {
                 sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ." 
             }
         }
+        stage('Pushing the image to dockerhub') {
+            steps {
+                withCredentials([(usernamePassord(credentialsId: 'docker-pass',
+                                                  usernameVariable: '$DOCKER_USER',
+                                                  usernamePassword: '$DOCKER_PASS'  ))])  {
+                sh 'docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}'
+                sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ." 
+                sh docker push ${DOCKER_IMAGE}
+                }
+        }
+        
     }
 
     post {
         success {
-            echo "built successfully"
+            echo "Image uploaded successfully"
         }
         failure {
-            echo "failed to build"
+            echo "failed to uploade Image"
         }
     }
 }
+}
+
+    
