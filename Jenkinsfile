@@ -13,6 +13,18 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Run Tests') {
+            steps {
+                echo 'Installing dependencies and running unit tests...'
+                // Run pytest using Python. If a test fails, the pipeline stops immediately.
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    pytest test_app.py
+                '''
+            }
+        }
         
         stage('Building the image') {
             steps {
