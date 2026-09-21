@@ -40,7 +40,7 @@ pipeline {
             echo "failed to uploade Image"
         }
     }
-}
-}
+
+
 
     
