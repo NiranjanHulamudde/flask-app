@@ -17,7 +17,7 @@ pipeline {
                 sh 'docker build -t ${Docker_IMAGE}:${IMAGE_TAG} .' 
             }
         }
-     post {
+post {
         success {
                 echo "deployed successfully"
             }
