@@ -16,7 +16,7 @@ pipeline {
         
         stage('Building the image') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ." 
+                sh "docker build -t ${DOCKER_USER}/${DOCKER_IMAGE}:${IMAGE_TAG} ." 
             }
         }
         stage('Pushing the image to dockerhub') {
