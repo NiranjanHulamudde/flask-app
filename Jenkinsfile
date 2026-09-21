@@ -29,9 +29,9 @@ pipeline {
                 sh "docker push ${DOCKER_IMAGE}"
                 }
         }
-        
+        }
     }
-
+}
     post {
         success {
             echo "Image uploaded successfully"
