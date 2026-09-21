@@ -24,14 +24,12 @@ pipeline {
                 withCredentials([(usernamePassword(credentialsId: 'docker-pass',
                                                   usernameVariable: '$DOCKER_USER',
                                                   passwordVariable: '$DOCKER_PASSWORD'  ))])  {
-                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}"
-                sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ." 
-                sh "docker push ${DOCKER_IMAGE}"
+                    echo "docker \${DOCKER_PASSWORD} | docker login -u \${DOCKER_USER} --password-stdin"
+                    sh "docker push ${DOCKER_USER}/${DOCKER_IMAGE}:${IMAGE_TAG}"
                 }
         }
         }
     }
-}
     post {
         success {
             echo "Image uploaded successfully"
@@ -40,7 +38,4 @@ pipeline {
             echo "failed to uploade Image"
         }
     }
-
-
-
-    
+}
