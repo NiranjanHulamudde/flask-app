@@ -2,28 +2,31 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_USER = 'niranjanhulamudde'
+        DOCKER_USER  = 'niranjanhulamudde'
         DOCKER_IMAGE = 'flask-app'
-        IMAGE_TAG = 'latest'
+        IMAGE_TAG    = 'latest'
     }
+
     stages {
         stage('Code checking') {
             steps {
                 checkout scm
             }
         }
+        
         stage('Building the image') {
             steps {
-                sh 'docker build -t ${Docker_IMAGE}:${IMAGE_TAG} .' 
+                sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ." 
             }
         }
-post {
+    }
+
+    post {
         success {
-                echo "deployed successfully"
-            }
+            echo "built successfully"
+        }
         failure {
-                echo "failed  to deploy"
-            }
+            echo "failed to build"
         }
     }
 }
