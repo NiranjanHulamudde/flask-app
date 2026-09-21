@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER-USER = 'niranjanhulamudde'
+        DOCKER_USER = 'niranjanhulamudde'
         DOCKER_IMAGE = 'flask-app'
         IMAGE_TAG = 'latest'
     }
