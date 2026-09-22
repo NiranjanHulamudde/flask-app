@@ -13,6 +13,7 @@ A production-ready DevOps portfolio project demonstrating **Continuous Integrati
                                                  ├──► 2. Run PyTest Unit Tests
                                                  ├──► 3. Secure Docker Build
                                                  └──► 4. Push to Docker Hub 📦
+                                                 └──► 5. Provision the infrastructure
 ```
 
 ---
@@ -41,7 +42,7 @@ The project utilizes a declarative `Jenkinsfile` that automatically executes the
 2.  **Run Tests:** Dynamically creates a virtual environment, installs dependencies, and runs `pytest` to stop broken code before it is packaged.
 3.  **Building the Image:** Compiles a production-ready container image tagged under the user namespace.
 4.  **Pushing to Docker Hub:** Leverages secure Jenkins credential helper structures to authenticate and push the final image (`latest`) to the remote public registry.
-
+5. **Provisioning the infrastructure** Access the aws and creates an EC2 instance with the security group attached to it allowing traffic to the application via port 5000 and ssh via 22.
 ---
 
 ## ☁️ Infrastructure Blueprint (IaC)
@@ -49,8 +50,6 @@ The `terraform/` directory contains complete architecture definitions to provisi
 
 *   `providers.tf`: Sets up version constraints and registers the AWS cloud provider block.
 *   `main.tf`: Configures the networking layout and server details:
-    *   **Custom VPC & Subnets:** Isolated public networks.
-    *   **Route Tables & Internet Gateway:** Attaches external routing properties safely.
     *   **Security Groups:** Open to `port 22` (SSH admin access) and `port 5000` (Flask application routing).
     *   **EC2 Instance Engine:** Configured to bootstrap with an automatic shell initialization script (`user_data`) that auto-installs Docker and spins up the app container on startup.
 *   `outputs.tf`: Prints out the public EC2 runtime IP address dynamically upon infrastructure convergence.
