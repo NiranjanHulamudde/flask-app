@@ -38,7 +38,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-pass',
                                                   usernameVariable: 'HUB_USER',
                                                   passwordVariable: 'HUB_PASS')]) {
-                    // Fixed: Removed the accidental 'docker' word inside the echo command
+                    
                     sh "echo \${HUB_PASS} | docker login -u \${HUB_USER} --password-stdin"
                     sh "docker push ${DOCKER_USER}/${DOCKER_IMAGE}:${IMAGE_TAG}"
                 }
