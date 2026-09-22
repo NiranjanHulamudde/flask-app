@@ -12,6 +12,7 @@ pipeline {
             steps {
                 checkout scm
             }
+            }
         }
         stage('Run Tests') {
             steps {
@@ -63,6 +64,5 @@ pipeline {
         failure {
             echo "failed to uploade Image"
         }
-    }
-}
+   }
 }
