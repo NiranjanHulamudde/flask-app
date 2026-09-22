@@ -30,7 +30,8 @@ pipeline {
             steps {
                 sh "docker build -t ${DOCKER_USER}/${DOCKER_IMAGE}:${IMAGE_TAG} ." 
             }
-        }
+        }  
+        
         stage('Pushing the image to dockerhub') {
             steps {
                 withCredentials([(usernamePassword(credentialsId: 'docker-pass',
@@ -41,6 +42,19 @@ pipeline {
                 }
         }
         }
+
+        stage('Infrastructure provisioning') {
+            environment {
+                AWS_ACCES_KEY_ID = credentials('aws-access-key-id')
+                AWS_SECRET_ACCES_KEY = credentials('aws-secret-access-key')
+                                    }
+            steps {
+                dir('terraform') {
+                    sh 'terraform init'
+                    sh 'terraform apply --auto-approve'
+                }
+
+            }
     }
     post {
         success {
